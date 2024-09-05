@@ -63,7 +63,7 @@ namespace RpgApi.Controllers
             return Ok(personagens);
         }
 
-        [HttpDelete("{id}")]//Deleta algo a partir de um parâmetro
+        [HttpDelete("{id}")] //Deleta algo a partir de um parâmetro
         public IActionResult Delete(int id)
         {
             personagens.RemoveAll(pers => pers.Id == id);
