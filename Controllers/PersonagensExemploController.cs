@@ -71,11 +71,10 @@ namespace RpgApi.Controllers
             return Ok(personagens);
         }
 
-        [HttpGet("GetByEnum/{enumId}")]//Pesquisa e exibe algo a partir de um parâmetro
-        public IActionResult GetByNum(int enumId)
+        [HttpGet("GetByClasse/{Classe}")]
+        public IActionResult Get(ClasseEnum Classe)
         {
-            ClasseEnum  enumDigitado = (ClasseEnum)enumId;
-            List<Personagem> listaBusca = personagens.FindAll (p => p.Classe == enumDigitado);
+            List<Personagem> listaBusca = personagens.FindAll (p => p.Classe == Classe);
 
             return Ok(listaBusca);
         }
