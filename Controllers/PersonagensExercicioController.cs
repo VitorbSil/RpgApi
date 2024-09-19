@@ -72,6 +72,7 @@ namespace RpgApi.Controllers
                 if (novoPersonagem.Inteligencia < 35)
                     return BadRequest("Um mago não pode ter Inteligência menor que 35");
             }
+            
             personagens.Add(novoPersonagem);
             return Ok(personagens);
         }
