@@ -21,7 +21,7 @@ namespace RpgApi.Controllers
             _context = context;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}")] //Filtra por Id.
         public async Task<IActionResult> GetSingle(int id)
         {
             try
@@ -37,7 +37,7 @@ namespace RpgApi.Controllers
             }
         }
 
-        [HttpGet("GetAll")]
+        [HttpGet("GetAll")] //Exibe toda a lista de personagens.
         public async Task<IActionResult> Get()
         {
             try
@@ -51,7 +51,7 @@ namespace RpgApi.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost] //Adiciona um personagem à lista.
         public async Task<IActionResult> Add(Personagem novoPersonagem)
         {
             try
@@ -71,7 +71,7 @@ namespace RpgApi.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPut] //Atualiza um elemento da lista.
         public async Task<IActionResult> Update(Personagem novoPersonagem)
         {
             try
@@ -91,7 +91,7 @@ namespace RpgApi.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}")] //Exclui um elemento da lista.
 
         public async Task<IActionResult> Delete (int id)
         {
