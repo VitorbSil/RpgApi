@@ -21,14 +21,18 @@ namespace RpgApi.Data
         public DbSet<Personagem> TB_PERSONAGENS { get; set; }
         public DbSet<Arma> TB_ARMAS { get; set; }
         public DbSet<Usuario> TB_USUARIOS { get; set; }
+        public DbSet<Habilidade> TB_HABILIDADES { get; set; }
+        public DbSet<PersonagemHabilidade> TB_PERSONAGENS_HABILIDADES { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Personagem>().ToTable("TB_PERSONAGENS");
             modelBuilder.Entity<Arma>().ToTable("TB_ARMAS");
             modelBuilder.Entity<Usuario>().ToTable("TB_USUARIOS");
+            modelBuilder.Entity<Habilidade>().ToTable("TB_HABILIDADES");
+            modelBuilder.Entity<PersonagemHabilidade>().ToTable("TB_PERSONAGENS_HABILIDADES");
 
-            //Relacionamentos
+            //Relacionamento One to Many (Um para Muitos)
             modelBuilder.Entity<Usuario>()
             .HasMany(e => e.Personagens)
             .WithOne(e => e.Usuario)
@@ -64,6 +68,29 @@ namespace RpgApi.Data
               new Arma() { Id = 7, Nome = "Cajado", Dano = 32, PersonagemId = 7 }
             );
 
+            modelBuilder.Entity<PersonagemHabilidade>()
+            .HasKey(ph => new { ph.PersonagemId, ph.HabilidadeId });
+
+            modelBuilder.Entity<Habilidade>().HasData
+            (
+                new Habilidade() { Id = 1, Nome = "Adormecer", Dano = 39 },
+                new Habilidade() { Id = 2, Nome = "Congelar", Dano = 41 },
+                new Habilidade() { Id = 3, Nome = "Hipnotizar", Dano = 37 }
+            );
+
+            modelBuilder.Entity<PersonagemHabilidade>().HasData
+            (
+                new PersonagemHabilidade() { PersonagemId = 1, HabilidadeId = 1 },
+                new PersonagemHabilidade() { PersonagemId = 1, HabilidadeId = 2 },
+                new PersonagemHabilidade() { PersonagemId = 2, HabilidadeId = 2 },
+                new PersonagemHabilidade() { PersonagemId = 3, HabilidadeId = 2 },
+                new PersonagemHabilidade() { PersonagemId = 3, HabilidadeId = 3 },
+                new PersonagemHabilidade() { PersonagemId = 4, HabilidadeId = 3 },
+                new PersonagemHabilidade() { PersonagemId = 5, HabilidadeId = 1 },
+                new PersonagemHabilidade() { PersonagemId = 6, HabilidadeId = 2 },
+                new PersonagemHabilidade() { PersonagemId = 7, HabilidadeId = 3 }
+            );
+
             //Início da criação do usuário padrão.
             Usuario user = new Usuario();
             Criptografia.CriarPasswordHash("123456", out byte[] hash, out byte[] salt);
@@ -95,10 +122,5 @@ namespace RpgApi.Data
 
             base.ConfigureConventions(configurationBuilder);
         }
-
-
-
-
-
     }
 }
