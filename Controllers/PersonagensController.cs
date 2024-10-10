@@ -26,10 +26,11 @@ namespace RpgApi.Controllers
         {
             try
             {
-                Personagem p = await _context.TB_PERSONAGENS
+                 Personagem? p = await _context.TB_PERSONAGENS
                 .Include(ar => ar.Arma)
-                .Include(ph => ph.PersonagemHabilidades)
-                    .ThenInclude(h => h.Habilidade)
+                .Include(us => us.Usuario)
+                .Include(p => p.PersonagemHabilidades)
+                    .ThenInclude(ps => ps.Habilidade)
                 .FirstOrDefaultAsync(pBusca => pBusca.Id == id);
 
                 return Ok(p);
@@ -101,6 +102,7 @@ namespace RpgApi.Controllers
             try
             {
                 Personagem pRemover = await _context.TB_PERSONAGENS.FirstOrDefaultAsync(p => p.Id == id);
+                
 
                 _context.TB_PERSONAGENS.Remove(pRemover);
                 int linhasAfetadas = await _context.SaveChangesAsync();

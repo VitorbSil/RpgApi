@@ -57,6 +57,63 @@ namespace RpgApi.Controllers
             }
         }
 
+        [HttpGet("{personagemId}")]
+        public async Task<IActionResult> GetHabilidadesPersonagem(int personagemId)
+        {
+            try
+            {
+                List<PersonagemHabilidade> phLista = new List<PersonagemHabilidade>();
+                phLista = await _context.TB_PERSONAGENS_HABILIDADES
+                .Include(p => p.Personagem)
+                .Include(p => p.Habilidade)
+                .Where(p => p.Personagem.Id == personagemId).ToListAsync();
+                return Ok(phLista);
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("GetHabilidades")]
+        public async Task<IActionResult> GetHabilidades()
+        {
+            try
+            {
+                List<Habilidade> habilidades = new List<Habilidade>();
+                habilidades = await _context.TB_HABILIDADES.ToListAsync();
+                return Ok(habilidades);
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("DeletePersonagemHabilidade")]
+        public async Task<IActionResult> DeleteAsync(PersonagemHabilidade ph)
+        {
+            try
+            {
+               PersonagemHabilidade? phRemover = await _context.TB_PERSONAGENS_HABILIDADES
+                    .FirstOrDefaultAsync(phBusca => phBusca.PersonagemId == ph.PersonagemId
+                     && phBusca.HabilidadeId == ph.HabilidadeId);
+                if(phRemover == null)
+                    throw new System.Exception("Personagem ou Habilidade não encontrados");
+
+                _context.TB_PERSONAGENS_HABILIDADES.Remove(phRemover);
+                int linhasAfetadas = await _context.SaveChangesAsync();
+                return Ok(linhasAfetadas);
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        
+
+
 
 
 
