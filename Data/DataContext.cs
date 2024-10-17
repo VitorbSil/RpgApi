@@ -114,7 +114,7 @@ namespace RpgApi.Data
             modelBuilder.Entity<Usuario>().Property(u => u.Perfil).HasDefaultValue("Jogador");
 
             modelBuilder.Entity<Disputa>().HasKey(d => d.Id);
-            modelBuilder.Entity<Disputa>().Property(d => d.DataDisputa).HasColumnName("Dt.Disputa");
+            modelBuilder.Entity<Disputa>().Property(d => d.DataDisputa).HasColumnName("Dt_Disputa");
             modelBuilder.Entity<Disputa>().Property(d => d.AtacanteId).HasColumnName("AtacanteId");
             modelBuilder.Entity<Disputa>().Property(d => d.OponenteId).HasColumnName("OponenteId");
             modelBuilder.Entity<Disputa>().Property(d => d.Narracao).HasColumnName("Tx_Narracao");
