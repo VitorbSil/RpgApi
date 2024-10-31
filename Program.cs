@@ -7,7 +7,7 @@ builder.Services.AddDbContext<DataContext>
 (
     options =>
     {
-        options.UseSqlServer(builder.Configuration.GetConnectionString("ConexaoLocal")); //Conexão Local é feita na escola. Conexão Somee é feita para utilizar em outro lugar.
+        options.UseSqlServer(builder.Configuration.GetConnectionString("ConexaoSomee")); //Conexão Local é feita na escola. Conexão Somee é feita para utilizar em outro lugar.
     }
 );
 
